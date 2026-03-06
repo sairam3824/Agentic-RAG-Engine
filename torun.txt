@@ -1,0 +1,48 @@
+Agentic RAG Engine - How To Run
+
+1) Go to project directory
+cd "/Users/sairammaruri/Documents/New git projects/Agentic RAG Engine"
+
+2) Recommended: run everything in one command
+chmod +x all_in_once.sh
+./all_in_once.sh --python python3.13
+
+3) If you want custom ports
+./all_in_once.sh --api-port 9000 --demo-port 8601 --python python3.13
+
+4) Open in browser
+- API root:   http://localhost:8000/
+- API docs:   http://localhost:8000/docs
+- Streamlit:  http://localhost:8501/
+
+Note: if ports 8000 or 8501 are busy, script auto-picks next free ports and prints them.
+
+5) Logs
+- API log:   logs/api.log
+- Demo log:  logs/demo.log
+
+6) Stop services
+Press Ctrl+C in the terminal running all_in_once.sh
+
+Manual run (without script):
+
+A) Create and activate venv
+python3.13 -m venv .venv
+source .venv/bin/activate
+
+B) Install dependencies
+pip install -r requirements.txt
+
+C) Run tests
+pytest -q
+
+D) Run API
+uvicorn src.api:app --reload --host 127.0.0.1 --port 8000
+
+E) Run Streamlit (new terminal, same venv)
+streamlit run src/demo.py --server.port 8501 --server.headless true
+
+Optional environment variables:
+export OPENAI_API_KEY="your-openai-key"
+export TAVILY_API_KEY="your-tavily-key"
+export OPENAI_MODEL="gpt-4.1-mini"
