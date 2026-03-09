@@ -201,4 +201,4 @@ See `CLAUDE.md` for Claude-focused quickstart commands and prompt templates for 
 
 ## License
 
-Apache License 2.0 (`LICENSE`).
+MIT License (`LICENSE`).
