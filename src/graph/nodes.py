@@ -149,7 +149,7 @@ class AgenticRAGNodes:
             if normalized in allowed and normalized not in requested:
                 requested.append(normalized)
         if requested:
-            return [source for source in default if source in requested] or requested
+            return requested
         return default
 
     def query_analyzer(self, state: RAGState) -> dict[str, Any]:
