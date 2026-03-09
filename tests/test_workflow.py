@@ -135,3 +135,15 @@ def test_direct_answer_fallback_evaluates_math_expression():
     state = engine.run("5 * (3 + 1)", sources=["vector", "web", "sql"], max_iterations=3)
     assert state["needs_retrieval"] is False
     assert "20" in state["answer"]
+def test_requested_multiple_sources_are_respected():
+    engine = make_engine()
+    # "factual" query type usually defaults to ["vector", "web"]
+    # We want to ensure that requesting ["web", "sql"] respects BOTH.
+    state = engine.run("What is the latest revenue?", sources=["web", "sql"], max_iterations=1)
+    
+    retriever_events = [e for e in state["retrieval_trace"] if e["node"] == "RETRIEVER"]
+    assert retriever_events
+    selected = retriever_events[0]["data"]["selected_sources"]
+    assert "web" in selected
+    assert "sql" in selected
+    assert len(selected) == 2
